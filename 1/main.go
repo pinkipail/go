@@ -21,5 +21,5 @@ func main() {
 		height = PhysicsBall(height)
 		step = i
 	}
-	fmt.Println("С высоты ", FirstHeight, " потребуется ", step, " шагов")
+	fmt.Println("С высотcы ", FirstHeight, " потребуется ", step, " шагов")
 }
