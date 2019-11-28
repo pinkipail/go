@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "2.5"
+		},
+		{
+			"path": "test"
 		}
 	],
 	"settings": {}

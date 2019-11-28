@@ -24,7 +24,7 @@ type publisher struct {
 	ID   int
 }
 
-func loadBooks(fileName string) []book {
+func loadJson(fileName string, x interface{}) {
 	file, err := os.Open(fileName)
 	if err != nil {
 		panic(err)
@@ -32,35 +32,7 @@ func loadBooks(fileName string) []book {
 	defer file.Close()
 	dec := json.NewDecoder(file)
 
-	var temp []book
-	dec.Decode(&temp)
-	return temp
-}
-
-func loadPublishers(fileName string) []publisher {
-	file, err := os.Open(fileName)
-	if err != nil {
-		panic(err)
-	}
-	defer file.Close()
-	dec := json.NewDecoder(file)
-
-	var temp []publisher
-	dec.Decode(&temp)
-	return temp
-}
-
-func loadAuthor(fileName string) []author {
-	file, err := os.Open(fileName)
-	if err != nil {
-		panic(err)
-	}
-	defer file.Close()
-	dec := json.NewDecoder(file)
-
-	var temp []author
-	dec.Decode(&temp)
-	return temp
+	dec.Decode(&x)
 }
 
 func countPressrun(authors []author, books []book) {
@@ -133,14 +105,13 @@ func bestAuthor(books []book, authors []author) {
 	fmt.Println(arrCount)
 	lenArr := []int{0, 0, 0, 0, 0}
 	for _, book := range books {
-		for j, int := range book.Author {
+		for _, int := range book.Author {
 			for i := 0; i < len(arrCount); i++ {
 				if arrCount[i] == int {
 					lenArr[i]++
 				}
 
 			}
-			fmt.Println(j)
 		}
 	}
 	max := 0
@@ -154,11 +125,16 @@ func bestAuthor(books []book, authors []author) {
 }
 func main() {
 
-	books := loadBooks("books.json")
+	var books []book
+	loadJson("books.json",&books)
 
-	publishers := loadPublishers("publishers.json")
+	var publishers []publisher
+	loadJson("publishers.json",&publishers)
 
-	authors := loadAuthor("author.json")
+	var authors []author
+	loadJson("author.json",&authors)
+
+	fmt.Printf(books[0].Name, publishers[0].Name)
 	countPressrun(authors, books)
 	fmt.Println()
 
@@ -166,4 +142,4 @@ func main() {
 	fmt.Println()
 	bestAuthor(books, authors)
 
-}
+} 
